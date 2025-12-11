@@ -12,6 +12,7 @@ const COURTS = [];
 
 const ITEMS_PER_PAGE = 10;
 
+
 function LandingPage() {
     const [selectedDir, setSelectedDir] = useState(null);
     const [selectedPN, setSelectedPN] = useState(null);
@@ -73,8 +74,6 @@ function LandingPage() {
                         number: putusan.nomor_putusan,
                         title: `Putusan ${putusan.lembaga?.nama_lembaga || "Pengadilan"} Nomor ${putusan.nomor_putusan}`,
                         dateText: `Tahun ${putusan.tahun?.tahun || "-"} — ${putusan.jenis_putusan || "Putusan"}`,
-                        views: Math.floor(Math.random() * 300),
-                        comments: Math.floor(Math.random() * 150),
                     }));
 
                     setDecisions(transformedDecisions);
@@ -279,13 +278,7 @@ function LandingPage() {
                     placeholder="Narkotika, perceraian, pajak, ..."
                   />
                 </div>
-                <button 
-                  onClick={handleSearch}
-                  disabled={loading}
-                  className="mt-1 w-full rounded-lg bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? "Mencari..." : "Cari Putusan"}
-                </button>
+
               </div>
             </div>
 
@@ -308,7 +301,7 @@ function LandingPage() {
                             : "text-slate-700"
                         }`}
                         >
-                        <span>{dir.name}</span>
+                          <span>{dir.name}</span>
                         {dir.count > 0 && (
                             <span className="ml-2 rounded-full bg-slate-200 px-2 text-[10px] font-semibold text-slate-700">
                             {dir.count.toLocaleString("id-ID")}
@@ -361,6 +354,7 @@ function LandingPage() {
                         onClick={() => handleChangePN(pn.id)}
                         className={`flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 ${
                             selectedPN === pn.id
+
                             ? "bg-slate-100 font-semibold text-slate-900"
                             : "text-slate-700"
                         }`}
@@ -483,7 +477,7 @@ function LandingPage() {
                   {/* tombol halaman sederhana */}
                   {Array.from({ length: totalPages }).map((_, idx) => {
                     const page = idx + 1;
-                    // Tampilkan max 5 tombol halaman
+                      // Tampilkan max 5 tombol halaman
                     if (totalPages > 5) {
                       if (page === 1 || page === totalPages || (page >= pagination.page - 1 && page <= pagination.page + 1)) {
                         return (

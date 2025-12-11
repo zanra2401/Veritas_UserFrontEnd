@@ -91,7 +91,11 @@ function PutusanDetailPage() {
           views: Math.floor(Math.random() * 300),
           comments: Math.floor(Math.random() * 120),
           amar_putusan: p.amar_putusan || "Amar putusan tidak tersedia",
-          url_dokumen: p.url_dokumen,
+          catatan_amar: p.catatan_amar || p.amar_lainya || null,
+          // Download URL - jika ada url_dokumen, gunakan download endpoint dari ServerDaerah
+          url_dokumen: p.url_dokumen 
+            ? `${p.lembaga?.url_api}/putusan/${p.id_putusan_daerah || p.id}/download`
+            : null,
           hakim_ketua: p.hakim_ketua?.nama || (typeof p.hakim_ketua === 'string' ? p.hakim_ketua : null),
           penuntut_umum: p.penuntut_umum?.nama || (typeof p.penuntut_umum === 'string' ? p.penuntut_umum : null),
           panitera: p.panitera?.nama || (typeof p.panitera === 'string' ? p.panitera : null),
@@ -152,10 +156,10 @@ function PutusanDetailPage() {
             {error || "Data putusan tidak tersedia dari server."}
           </p>
           <Link
-            to="/putusan"
+            to="/"
             className="mt-4 inline-flex items-center justify-center rounded-lg bg-sky-600 px-4 py-2 text-xs font-semibold text-white hover:bg-sky-700"
           >
-            ← Kembali ke daftar putusan
+            Kembali ke daftar putusan
           </Link>
         </div>
       </section>
@@ -181,10 +185,10 @@ function PutusanDetailPage() {
           </nav>
 
           <Link
-            to="/putusan"
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-300 px-2 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
+            to="/"
+            className="inline-flex items-center gap-1 rounded-sm border border-black px-2 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-200 cursor-pointer"
           >
-            ← Kembali ke daftar
+            Kembali ke daftar
           </Link>
         </div>
 
@@ -209,10 +213,11 @@ function PutusanDetailPage() {
                   Putus: <span className="font-medium text-slate-700">{decision.decisionDate}</span>
                 </span>
                 <span>
-                  Upload: <span className="font-medium text-slate-700">{decision.uploadDate}</span>
+                  Upload:{" "}
+                  <span className="font-medium text-slate-700">
+                    {decision.uploadDate}
+                  </span>
                 </span>
-                <span className="inline-flex items-center gap-1">👁️ <span>{decision.views}</span></span>
-                <span className="inline-flex items-center gap-1">💬 <span>{decision.comments}</span></span>
               </div>
             </header>
 
@@ -300,6 +305,17 @@ function PutusanDetailPage() {
               </p>
             </section>
 
+            {decision.catatan_amar && (
+              <section className="space-y-2 text-xs text-slate-700">
+                <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Catatan Amar
+                </h2>
+                <p className="rounded-lg border border-dashed border-amber-200 bg-amber-50 px-3 py-3 text-amber-900">
+                  {decision.catatan_amar}
+                </p>
+              </section>
+            )}
+
             <section className="border-t pt-3">
               <p className="text-[11px] text-slate-500">
                 Dokumen lengkap tersedia dalam bentuk PDF pada server pengadilan
@@ -307,14 +323,32 @@ function PutusanDetailPage() {
               </p>
               <div className="mt-2 flex flex-wrap gap-2 text-xs">
                 {decision.url_dokumen ? (
-                  <a
-                    href={decision.url_dokumen}
-                    target="_blank"
-                    rel="noreferrer"
+                  <button
+                    onClick={async () => {
+                      try {
+                        const resp = await fetch(decision.url_dokumen, {
+                          headers: {
+                            "x-api-key": API_KEY,
+                          },
+                        });
+                        if (!resp.ok) throw new Error("Download gagal");
+                        const blob = await resp.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = `Putusan_${decision.number.replace(/\//g, "-")}.pdf`;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                      } catch (err) {
+                        alert("Gagal download dokumen: " + err.message);
+                      }
+                    }}
                     className="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-3 py-2 font-semibold text-white shadow-sm hover:bg-sky-700"
                   >
                     📄 Unduh PDF
-                  </a>
+                  </button>
                 ) : (
                   <button
                     disabled

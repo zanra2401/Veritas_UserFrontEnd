@@ -26,17 +26,6 @@ function Header() {
           {/* DESKTOP NAV */}
           <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
             <NavLink
-              to="/putusan"
-              className={({ isActive }) =>
-                [
-                  "transition-colors hover:text-slate-900 text-lg",
-                  isActive ? "text-slate-900" : "text-slate-600",
-                ].join(" ")
-              }
-            >
-              Cari Putusan
-            </NavLink>
-            <NavLink
                 to="/#"
                 className={({ isActive }) =>
                     [
@@ -124,15 +113,6 @@ function Header() {
           </div>
 
           <nav className="flex flex-col gap-1 px-2 py-3">
-            <NavLink
-                to="/putusan"
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                    `${linkBase} ${isActive ? "text-slate-900" : "text-slate-600"}`
-                }
-            >
-                Cari Putusan
-            </NavLink>
             <NavLink
                 to="/"
                 onClick={() => setOpen(false)}
