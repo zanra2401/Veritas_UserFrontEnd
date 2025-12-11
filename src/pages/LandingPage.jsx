@@ -373,7 +373,7 @@ function LandingPage() {
                     placeholder="Narkotika, perceraian, pajak, ..."
                   />
                 </div>
-                <button className="mt-1 w-full rounded-lg bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700">
+                <button className="cursor-pointer mt-1 w-full rounded-lg bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700">
                   Cari Putusan
                 </button>
               </div>
@@ -392,7 +392,7 @@ function LandingPage() {
                         <button
                         type="button"
                         onClick={() => handleChangeDir(dir.name)}
-                        className={`flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 ${
+                        className={`cursor-pointer flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 ${
                             selectedDir === dir.name
                             ? "bg-slate-100 font-semibold text-slate-900"
                             : "text-slate-700"
@@ -424,7 +424,7 @@ function LandingPage() {
                     key={year}
                     type="button"
                     onClick={() => handleChangeYear(year)}
-                    className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+                    className={`cursor-pointer rounded-sm border px-3 py-1 text-xs font-medium transition ${
                       selectedYear === year
                         ? "border-sky-600 bg-sky-50 text-sky-700"
                         : "border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50"
@@ -450,7 +450,7 @@ function LandingPage() {
                         <button
                         type="button"
                         onClick={() => handleChangePN(pn.name)}
-                        className={`flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 ${
+                        className={`cursor-pointer flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 ${
                             selectedPN === pn.name
                             ? "bg-slate-100 font-semibold text-slate-900"
                             : "text-slate-700"
@@ -540,7 +540,7 @@ function LandingPage() {
                     type="button"
                     onClick={() => goToPage(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className={`rounded-md border px-2 py-1 ${
+                    className={`cursor-pointer rounded-md border px-2 py-1 ${
                       currentPage === 1
                         ? "cursor-not-allowed border-slate-200 text-slate-300"
                         : "border-slate-300 text-slate-700 hover:bg-slate-50"
@@ -557,7 +557,7 @@ function LandingPage() {
                         key={page}
                         type="button"
                         onClick={() => goToPage(page)}
-                        className={`min-w-[2rem] rounded-md border px-2 py-1 text-center ${
+                        className={`cursor-pointer  min-w-[2rem] rounded-md border px-2 py-1 text-center ${
                           currentPage === page
                             ? "border-sky-600 bg-sky-50 text-sky-700"
                             : "border-slate-300 text-slate-700 hover:bg-slate-50"
@@ -572,7 +572,7 @@ function LandingPage() {
                     type="button"
                     onClick={() => goToPage(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`rounded-md border px-2 py-1 ${
+                    className={`cursor-pointer  rounded-md border px-2 py-1 ${
                       currentPage === totalPages
                         ? "cursor-not-allowed border-slate-200 text-slate-300"
                         : "border-slate-300 text-slate-700 hover:bg-slate-50"

@@ -114,15 +114,6 @@ function Header() {
 
           <nav className="flex flex-col gap-1 px-2 py-3">
             <NavLink
-                to="/putusan"
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                    `${linkBase} ${isActive ? "text-slate-900" : "text-slate-600"}`
-                }
-            >
-                Cari Putusan
-            </NavLink>
-            <NavLink
                 to="/"
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
